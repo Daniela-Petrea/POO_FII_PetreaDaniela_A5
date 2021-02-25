@@ -6,15 +6,16 @@ using namespace std;
 
 int main()
 {
-	//instantiere <tipul_clasei> <nume_obiect>
-	NumberList obiectulMeu;
-	printf("Obiect initial: %d\n", obiectulMeu.Init());
-	obiectulMeu.Add(25);
-	NumberList obiectulMeu2;
-	printf("Obiect initial: %d\n", obiectulMeu2.Init());
-	obiectulMeu2.Add(27);
-	obiectulMeu2.Sort();
-	printf("Obiect modificat: %d\n", obiectulMeu2.Print());
+	NumberList obj;
+	obj.Init();
+	obj.Add(25);
+	obj.Add(12);
+	obj.Add(2);
+	obj.Add(45);
+	obj.Add(27);
+	obj.Print();
+	obj.Sort();
+	obj.Print();
 	system("pause");
 	return 0;
 }
