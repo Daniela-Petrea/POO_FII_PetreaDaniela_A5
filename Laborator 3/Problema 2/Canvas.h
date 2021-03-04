@@ -1,6 +1,9 @@
 #pragma once
 class Canvas
-{ // add private data members
+{
+    int latime;
+    int inaltime;
+    char** matrice;
 
 public:
 
