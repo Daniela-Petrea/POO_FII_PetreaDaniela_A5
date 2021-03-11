@@ -11,11 +11,11 @@ using namespace std;
 class Sort
 
 {
-  // add data members
+
   int* numbers;
   int count;
-  //int partition(int, int, bool);
-  //void quicksort(int, int, bool);
+  int partition(int, int, bool);
+  void quicksort(int, int, bool);
 
 public:
 
@@ -24,10 +24,9 @@ public:
     Sort(int counts, ...);
     Sort(char* c);
     Sort();
-
+    void QuickSort(bool ascendent = false);
+    
     void InsertSort(bool ascendent = false);
-
-    //void QuickSort(bool ascendent = false);
 
     void BubbleSort(bool ascendent = false);
 
