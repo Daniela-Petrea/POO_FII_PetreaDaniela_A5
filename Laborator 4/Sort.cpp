@@ -27,7 +27,8 @@ Sort::Sort(int* vector, int numar_elemente) {
 }
 
 Sort::Sort(int counts, ...) {
-	//alocati memoria
+	numbers = new int[counts];
+	count = counts;
 	va_list vl;
 	va_start(vl, counts);
 	for (int i = 0; i < counts; i++)
@@ -54,9 +55,10 @@ Sort::Sort(char* c) {
 	}
 }
 
-//Sort::Sort(int count) : numbers(new int[count] { 1, 2, 3, 4, 5, 6 }) {
-	//tot ce mai avem de facut este sa setam numarul de elemente din vector cum trebuie
-//}
+Sort::Sort() : numbers(new int[6]{ 5, 2, 6, 4, 3, 1 }) {
+	this->count = 6;
+};
+
 
 void Sort::InsertSort(bool ascendent ) {
 	int i, key, j;
@@ -64,16 +66,7 @@ void Sort::InsertSort(bool ascendent ) {
 	{
 		key = this->numbers[i];
 		j = i - 1;
-		if(ascendent ==false)
-		{ 
-		while (j >= 0 && this->numbers[j] > key)
-		{
-			this->numbers[j + 1] = this->numbers[j];
-			j = j - 1;
-		}
-		this->numbers[j + 1] = key;
-	}
-		else
+		if (ascendent == false)
 		{
 			while (j >= 0 && this->numbers[j] < key)
 			{
@@ -82,12 +75,66 @@ void Sort::InsertSort(bool ascendent ) {
 			}
 			this->numbers[j + 1] = key;
 		}
+		else
+		{
+			while (j >= 0 && this->numbers[j] > key)
+			{
+				this->numbers[j + 1] = this->numbers[j];
+				j = j - 1;
+			}
+			this->numbers[j + 1] = key;
+		}
+
+	}
 }
 
+int Sort::partition(int low, int high, bool ascendent)
+{
+	int pivot = numbers[high];
+	int aux;
+	int i = low - 1;
+	for (int j = low; j <= high - 1; j++)
+	{
+		if (ascendent == false)
+		{
+			if (numbers[j] > pivot)
+			{
+				i++;
+				aux = numbers[i];
+				numbers[i] =numbers[j];
+				numbers[j] = aux;
+			}
+		}
+		else
+		{
+			if (numbers[j] < pivot)
+			{
+				i++;
+				aux = numbers[i];
+				numbers[i] = numbers[j];
+				numbers[j] = aux;
+			}
+		}
+	}
+	aux = numbers[i + 1];
+	numbers[i + 1] = numbers[high];
+	numbers[high] = aux;
+	return(i + 1);
+}
 
-//void Sort::QuickSort(bool ascendent ) {
-//	quicksort(0, count - 1, ascendent);
-//}
+void Sort::quicksort(int low, int high, bool ascendent)
+{
+	if (low < high)
+	{
+		int p = partition(low, high, ascendent);
+		quicksort(low, p - 1, ascendent);
+		quicksort(p + 1, high, ascendent);
+	}
+}
+
+void Sort::QuickSort(bool ascendent ) {
+        quicksort(0, count - 1, ascendent);
+}
 
 void Sort::BubbleSort(bool ascendent) {
 	int schimb, ok = 0;
@@ -96,7 +143,7 @@ void Sort::BubbleSort(bool ascendent) {
 		ok = 1;
 		for (int i = 0; i < this->count - 1; i++)
 		{
-			if (acendent == true)
+			if (ascendent == true)
 			{
 
 				if (this->numbers[i] > this->numbers[i + 1])
@@ -135,7 +182,7 @@ int Sort::GetElementsCount()
 
 }
 
-int  GetElementFromIndex(int index)
+int Sort::GetElementFromIndex(int index)
 {
 	if (index >= 0 && index < count)
 		return numbers[index];
