@@ -1,15 +1,20 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-class Dacia :
-	public Car
+#include "Car.h"
+class Dacia :public Car
 {
-	int fuelcapacity;
-	int fuelconsmption;
-	int rainspeed;
-	int sunnyspeed;
-	int snowspeed;
 public:
 	Dacia();
 	~Dacia();
+	char* getcarname();
+	int getfuelcapacity();
+	int getfuelconsumption();
+	int getrainspeed();
+	int getsunnyspeed();
+	int getsnowspeed();
+	void setracetime(double time);
+	double getracetime();
+	void setraceconsumption(double consumare);
+	double getraceconsumption();
 };
 
