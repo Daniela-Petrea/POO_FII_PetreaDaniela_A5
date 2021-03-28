@@ -50,7 +50,7 @@ void Circuit::Race()
 				car[i]->terminare = 0;
 		}
 	}
-	if (this->weather == 1)
+	if (this->weather == 2)
 	{
 		for (int i = 0; i < this->maxIndex; i++)
 		{
@@ -64,7 +64,7 @@ void Circuit::Race()
 				car[i]->terminare = 0;
 		}
 	}
-	if (this->weather == 1)
+	if (this->weather == 3)
 	{
 		for (int i = 0; i < this->maxIndex; i++)
 		{
