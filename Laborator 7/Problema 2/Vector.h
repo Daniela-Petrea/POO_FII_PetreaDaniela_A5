@@ -62,13 +62,19 @@ public:
 	void insert(T myvalue, T myindex)
 	{
 		int i;
-		this->variabila++;
+		if (myindex < 0 || myindex > this->variabila)
+		{
+			cout << "Invalid\n";
+		}
+		else
+		{this->variabila++;
 
 		for (i = this->variabila - 1; i >= myindex + 1; i--)
 		{
 			vector[i] = vector[i - 1];
 		}
-		vector[myindex] = myvalue;
+		vector[myindex] = myvalue; }
+		
 	}
 	void print()
 	{
