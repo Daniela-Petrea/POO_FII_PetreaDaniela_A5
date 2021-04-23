@@ -1,0 +1,180 @@
+#include <fstream>
+#include <iostream>
+using namespace std;
+template<class K, class T>
+class Map
+{
+    struct element
+    {
+        T value{};
+        K key{};
+        int index{};
+    } *v{}, * tmp{};
+    int count;
+    int size;
+
+public:
+    Map()
+    {
+        this->size = 2;
+        this->count = 0;
+        v = (element*)malloc(sizeof(element) * size);
+    }
+    element* begin() { return &v[0]; }
+    element* end() { return &v[count]; }
+    void realocare()
+    {
+        size *= 2;
+        if (v != NULL)
+        {
+            tmp = (element*)realloc(v, sizeof(element) * size);
+            if (tmp != NULL)
+                tmp = v;
+        }
+    }
+    T& operator[](const K x) {
+
+        if (count == size)
+        {
+            realocare();
+        }
+        for (int i = 0; i < count; i++)
+        {
+            if (v[i].key == x)
+                return v[i].value;
+        }
+        v[count].key = x;
+        v[count++].index = count;
+        return v[count - 1].value;
+    }
+    void Set(K cheie, T valoare)
+    {
+        bool found = 0;
+        for (int i = 0; i < count; i++)
+        {
+            if (v[i].key == cheie)
+            {
+                found = 1;
+                v[i].value = valoare;
+            }
+            if (found == 1)
+                break;
+        }
+    }
+    int Count()
+    {
+        return this->count;
+    }
+    void Clear()
+    {
+        v[0].key = 0;
+        v[0].index = 0;
+        this->count = 0;
+        this->size = 0;
+    }
+    bool Delete(const K& key)
+    {
+        bool found = 0;
+        int k=0;
+        for (int i = 0; i < this->count; i++)
+        {
+            if (v[i].key == key)
+            {
+                k = i;
+            }
+        }
+        if (k != 0)
+        {
+            for (int i = k; i < this->count; i++)
+            {
+                v[i] = v[i + 1];
+            }
+        }
+    this->count--;
+            if (found == 0)
+                return 0;
+            else
+                return 1;
+    }
+    bool Includes(const Map<K, T>& map)
+    {
+        bool found =1;
+        int k = 0;
+        int i = 0;
+     for (int i = 0; i < this->count; i++)
+        {
+         for (int j = 0; j < map.count; j++)
+         {
+             if (v[i].key == map.v[j].key)
+            {
+                found = 0;
+            }
+         }
+             if (found == 0)
+            return 0;
+      }
+            return 1;
+    }
+    bool Get(const K& key, T& value)
+    {
+        bool found = 0;
+        int c; 
+        for (int i = 0; i < this->count; i++)
+        {
+            if (v[i].key == key)
+            {
+
+                found = 1;
+                value = v[i].value;
+
+            }
+
+        }
+        if (found == 0)
+            return 0;
+        else
+            return 1;
+    }
+};
+int main()
+{
+    Map<int, const char*> m;
+    m[10] = "C++";
+    printf("Obiect = %s\n", m[10]);
+    m[20] = "test";
+    printf("Obiect = %s\n", m[20]);
+    m[30] = "Poo";
+    printf("Obiect = %s\n", m[30]);
+    for (auto [ value,key, index] : m)
+    {
+        printf("Index:%d, Key=%d, Value=%s\n", index, key, value);
+    }
+    m[20] = "result";
+    printf("Obiect = %s\n", m[20]);
+    for (auto [value, key,  index] : m)
+    {
+        printf("Index:%d, Key=%d, Value=%s\n", index, key, value);
+    }
+    m.Set(10, "Sah");
+    printf("Obiect = %s\n", m[10]);
+    cout<<"Nr de elemente in mapa "<<m.Count()<<endl;
+    m.Delete(20);
+    for (auto [value, key, index] : m)
+    {
+        printf("Index:%d, Key=%d, Value=%s\n", index, key, value);
+    }
+    const char* valoare;
+    m.Get(50,valoare);
+    for (auto [value, key, index] : m)
+    {
+        printf("Index:%d, Key=%d, Value=%s\n", index, key, value);
+    }
+    Map <int, const char*> B;
+    B[10] = "C++";
+    printf("Obiect = %s\n", B[10]);
+    B[20] = "test";
+    printf("Obiect = %s\n", B[20]);  
+    m.Includes(B);
+    m.Clear();
+    return 0;
+}
